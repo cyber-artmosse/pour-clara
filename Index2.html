@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fcf4ee">
+<title>Pour Clara 💛</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100svh;display:grid;place-items:center;
+  padding:28px 20px;background:#fcf4ee;color:#68474c;
+  font-family:Georgia,serif;overflow-x:hidden;
+  background-image:radial-gradient(ellipse at top,#ffe0dc,transparent 65%);
+}
+main{width:min(100%,460px);text-align:center;position:relative;z-index:1}
+.label{font:11px system-ui;letter-spacing:4px;text-transform:uppercase;
+color:#a5797e;margin-bottom:26px}
+h1{font-size:clamp(42px,10vw,64px);font-weight:400;margin:15px 0}
+.subtitle{font-style:italic;color:#986e73;font-size:18px}
+button{cursor:pointer}
+.envelope{
+  display:block;margin:45px auto 24px;width:240px;height:160px;
+  border:0;border-radius:8px;background:#e8aba7;position:relative;
+  box-shadow:0 18px 40px #9c626328;transition:transform .3s;
+}
+.envelope:hover{transform:translateY(-5px) rotate(-2deg)}
+.envelope::before{
+  content:"";position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 60%);
+  background:#f3c4bd;border-radius:8px;
+}
+.seal{
+  position:absolute;left:calc(50% - 24px);top:65px;
+  width:48px;height:48px;border-radius:50%;background:#a24e61;
+  color:#fff3e6;display:grid;place-items:center;font-size:25px;
+  box-shadow:0 3px 8px #80435030;
+}
+.hint{font:13px system-ui;color:#a5797e}
+.letter{
+  background:#fffdf8;border:1px solid #ead9d1;border-radius:8px;
+  padding:32px 27px;box-shadow:0 18px 60px #9c626315;
+  animation:appear .7s ease both;
+}
+.letter p{font-size:19px;line-height:1.8;margin:18px 0}
+.flower{font-size:32px}
+.letter h2{font-size:32px;font-weight:400;margin:15px 0}
+.signature{font-style:italic;color:#a24e61}
+.reveal{
+  margin:18px 0 5px;border:1px solid #dca9ae;background:#fae8e5;
+  color:#884d5a;padding:15px 23px;border-radius:40px;
+  font:14px system-ui;transition:background .2s;
+}
+.reveal:hover{background:#f5d7d2}
+.surprise{border-top:1px solid #eedbd4;margin-top:28px;padding-top:20px;
+animation:appear .7s ease both}
+.surprise h3{font-size:29px;font-weight:400;margin:12px 0;color:#a24e61}
+.hidden{display:none}
+footer{margin-top:28px;font:11px system-ui;color:#ad8b8d;letter-spacing:1px}
+.heart{position:fixed;bottom:-40px;pointer-events:none;
+color:#c47b8b;animation:float 4s ease-out forwards;z-index:0}
+@keyframes appear{
+from{opacity:0;transform:translateY(18px)}
+to{opacity:1;transform:translateY(0)}
+}
+@keyframes float{
+to{transform:translateY(-110svh) rotate(25deg);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+*{animation:none!important;transition:none!important}
+.heart{display:none}
+}
+</style>
+</head>
+<body>
+<main>
+<div class="label">Une petite attention, juste pour toi</div>
+<section id="cover">
+<h1>Clara.</h1>
+<p class="subtitle">J’ai quelque chose à te dire…</p>
+<button class="envelope" id="open" aria-label="Ouvrir ta lettre">
+<span class="seal">♥</span>
+</button>
+<p class="hint">Appuie sur l’enveloppe pour l’ouvrir.</p>
+</section>
+
+<section id="letter" class="letter hidden" aria-label="Ta lettre">
+<div class="flower" aria-hidden="true">❀</div>
+<h2>Ma Clara,</h2>
+<p>Une nouvelle aventure nous attend, et je voulais
+te rappeler quelque chose :</p>
+<p><strong>Tu vas être une super maman.</strong></p>
+<p>Avec ta douceur, ton amour et tout ce qui fait de toi
+la personne que tu es, notre bébé aura beaucoup de chance
+de t’avoir.</p>
+<p>Tu n’as pas besoin de tout savoir ni de tout réussir.
+On apprendra ensemble, un jour après l’autre.</p>
+<p class="signature">Je t’aime. Et je suis heureux de vivre
+cette aventure avec toi. ♥</p>
+
+<button class="reveal" id="reveal">Et j’ai une autre surprise…</button>
+<div id="surprise" class="surprise hidden" aria-live="polite">
+<div aria-hidden="true">✈️</div>
+<h3>Londres, ce week-end.</h3>
+<p>Je viens te voir à Londres ce week-end !</p>
+<p>J’ai hâte de te retrouver et de te prendre dans mes bras.
+Cette fois, les bisous arrivent en personne. 💛</p>
+</div>
+</section>
+<footer>Pour toi, avec tout mon amour.</footer>
+</main>
+<script>
+const cover=document.getElementById('cover');
+const letter=document.getElementById('letter');
+function hearts(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  for(let i=0;i<16;i++){
+    setTimeout(()=>{
+      const heart=document.createElement('span');
+      heart.className='heart';heart.textContent='♥';
+      heart.setAttribute('aria-hidden','true');
+      heart.style.left=(5+Math.random()*90)+'vw';
+      heart.style.fontSize=(15+Math.random()*20)+'px';
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),4200);
+    },i*120);
+  }
+}
+document.getElementById('open').onclick=()=>{
+  cover.classList.add('hidden');
+  letter.classList.remove('hidden');
+  document.getElementById('reveal').focus({preventScroll:true});
+  hearts();
+};
+document.getElementById('reveal').onclick=()=>{
+  document.getElementById('reveal').classList.add('hidden');
+  const surprise=document.getElementById('surprise');
+  surprise.classList.remove('hidden');
+  surprise.scrollIntoView({
+    behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',
+    block:'nearest'
+  });
+  hearts();
+};
+</script>
+</body>
+</html>
